@@ -13,6 +13,7 @@ public class Main {
 
         try (Socket socket = new Socket("localhost", 5000)) {
 
+//            socket.setSoTimeout(5000);
             BufferedReader echoes = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter stringToEcho = new PrintWriter(socket.getOutputStream(), true);
             Scanner scanner = new Scanner(System.in);
@@ -20,16 +21,17 @@ public class Main {
             String response;
 
             do {
-                System.out.println("Enter string to be echoed: ");
+                System.out.println("CLIENT : Enter string to be echoed: ");
                 echoString = scanner.nextLine();
 
                 stringToEcho.println(echoString);
                 if (!echoString.equals("exit")) {
                     response = echoes.readLine();
-                    System.out.println(response);
+                    System.out.println("CLIENT : " + response);
                 }
             } while (!echoString.equals("exit"));
-
+//        }catch (SocketTimeoutException e){
+//           System.out.println("The socket timed out");
 
         } catch (IOException e) {
             System.out.println("Client Error: " + e.getMessage());
